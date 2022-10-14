@@ -1,79 +1,85 @@
 <template>
-  <div class="hand-container" :style="rotate"></div>
+  <div class="clock-hand" :class="handStyle" :style="applyRotation"></div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+type Hand = "HOUR" | "MINUTE" | "SECOND";
+type HandStyleClass = "hand-hour" | "hand-minute" | "hand-second" | "";
 
 export default defineComponent({
   name: "ClockHand",
   props: {
     handType: {
-      type: String,
+      type: String as () => Hand,
       required: true,
     },
   },
   data() {
     return {
-      rotate: "",
-      HAND_TYPE: {
-        HOUR: "HOUR",
-        MINUTE: "MINUTE",
-        SECOND: "SECOND",
-      },
-      rotateInterval: null as number | null,
+      handStyle: "" as HandStyleClass,
     };
   },
-  computed: {},
-  methods: {
+  computed: {
     getDegreesToRotate() {
-      const now = new Date();
       switch (this.handType) {
-        case this.HAND_TYPE.HOUR: {
-          const hours = now.getHours();
-          return (hours / 12) * 360 + (now.getMinutes() / 60) * 30 + 90;
+        case "HOUR": {
+          return this.$store.getters.rotationDegreesHours;
         }
-
-        case this.HAND_TYPE.MINUTE: {
-          const mins = now.getMinutes();
-          return (mins / 60) * 360 + (now.getSeconds() / 60) * 6 + 90;
+        case "MINUTE": {
+          return this.$store.getters.rotationDegreesMinutes;
         }
-
-        case this.HAND_TYPE.SECOND: {
-          const seconds = now.getSeconds();
-          return (seconds / 60) * 360;
+        case "SECOND": {
+          return this.$store.getters.rotationDegreesSeconds;
         }
-
         default:
           return null;
       }
     },
-    setRotation() {
-      const degrees = this.getDegreesToRotate();
-      this.rotate = `transform: rotate(${degrees}deg)`;
+    applyRotation() {
+      return `transform: rotate(${this.getDegreesToRotate}deg)`;
     },
   },
+  methods: {},
   mounted() {
-    console.log("hand mounted!");
-    this.rotateInterval = setInterval(this.setRotation, 1000);
-  },
-  unmounted() {
-    if (this.rotateInterval) {
-      clearInterval(this.rotateInterval);
+    switch (this.handType) {
+      case "HOUR": {
+        this.handStyle = "hand-hour";
+        break;
+      }
+      case "MINUTE": {
+        this.handStyle = "hand-minute";
+        break;
+      }
+      case "SECOND": {
+        this.handStyle = "hand-second";
+      }
     }
   },
 });
 </script>
 <style scoped>
-.hand-container {
+.clock-hand {
   position: absolute;
-  width: 50%;
   right: 50%;
   bottom: 50%;
-  height: 6px;
   border-radius: 10px;
   transform-origin: 100%;
   transform: rotate(90deg);
   background-color: black;
+}
+
+.hand-hour {
+  width: 25%;
+  height: 6px;
+}
+.hand-minute {
+  width: 35%;
+  height: 6px;
+}
+
+.hand-second {
+  width: 40%;
+  height: 3px;
 }
 </style>
