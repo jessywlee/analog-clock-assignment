@@ -2,7 +2,9 @@
   <div class="clock-container">
     <div class="clock">
       <img class="clock-img" src="@/assets/seoul.jpg" />
-      <ClockHand />
+      <ClockHand handType="HOUR" />
+      <ClockHand handType="MINUTE" />
+      <ClockHand handType="SECOND" />
     </div>
   </div>
 </template>
