@@ -54,6 +54,6 @@ button {
 }
 
 .timezone-btn-container {
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 </style>

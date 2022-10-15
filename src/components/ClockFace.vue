@@ -1,6 +1,7 @@
 <template>
   <div class="clock-container">
     <div class="clock" @mousemove="hoverOnClock" @mouseleave="leaveFromClock">
+      <div class="clock-center"></div>
       <img class="clock-img" :src="$store.state.selectedTimezone.image" />
       <span v-if="hovered" class="clock-tooltip" :style="tooltipPosition">
         {{ $store.state.now.toLocaleString() }}
@@ -77,10 +78,17 @@ export default defineComponent({
   height: 400px;
   background: url("@/assets/clock.png");
   border-radius: 50%;
-  border-color: black;
-  /* box-shadow: -4px -4px 10px rgba(67, 67, 67, 0.5),
-    inset 4px 4px 10px rgba(0, 0, 0, 0.5),
-    inset -4px -4px 10px rgba(67, 67, 67, 0.5), 4px 4px 10px rgba(0, 0, 0, 0.3); */
+}
+
+.clock-center {
+  position: absolute;
+  top: 47%;
+  left: 48%;
+  width: 20px;
+  height: 20px;
+  z-index: 90;
+  border-radius: 50%;
+  background-color: black;
 }
 
 .clock-img {
@@ -109,7 +117,8 @@ export default defineComponent({
   left: 42%;
   font-size: 30px;
   padding: 8px;
-  background-color: rgba(255, 255, 255, 0.5);
+  z-index: 95;
+  background-color: rgba(255, 255, 255, 0.8);
   border-radius: 10px;
 }
 </style>

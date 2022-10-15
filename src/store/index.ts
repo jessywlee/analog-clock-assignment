@@ -64,7 +64,6 @@ export default createStore({
     },
     setHandLoading(state, value) {
       state.handLoading = value;
-      console.log(value);
     },
   },
   actions: {},
