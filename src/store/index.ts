@@ -35,7 +35,7 @@ export default createStore({
       image: require("@/assets/seoul.jpg"),
     } as Timezone,
     now: new Date(),
-    handLoaded: false,
+    handLoading: false,
   },
   getters: {
     rotationDegreesHours(state) {
@@ -52,7 +52,7 @@ export default createStore({
     },
   },
   mutations: {
-    getNewDate(state) {
+    getNowDate(state) {
       state.now = new Date(
         new Date().toLocaleString("en-US", {
           timeZone: state.selectedTimezone.timezone,
@@ -61,6 +61,10 @@ export default createStore({
     },
     setSelectedTimezone(state, selected: Timezone) {
       state.selectedTimezone = selected;
+    },
+    setHandLoading(state, value) {
+      state.handLoading = value;
+      console.log(value);
     },
   },
   actions: {},

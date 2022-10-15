@@ -2,9 +2,13 @@
   <div class="timezone-btn-container">
     <button
       :key="item.value"
-      v-for="item in $store.state.timezoneOptions"
+      v-for="(item, index) in $store.state.timezoneOptions"
       :class="`timezone-${item.value}`"
-      @click="selectTimezone(item)"
+      @click="selectTimezone(item, index)"
+      :style="{
+        'background-color':
+          activeButton === index ? 'rgba(76, 214, 175, 0.5)' : '',
+      }"
     >
       {{ item.city }}
     </button>
@@ -21,10 +25,19 @@ export default defineComponent({
   data() {
     return {};
   },
-  computed: {},
+  computed: {
+    activeButton() {
+      const timezoneIndex = this.$store.state.timezoneOptions.indexOf(
+        this.$store.state.selectedTimezone
+      );
+      return timezoneIndex !== -1 ? timezoneIndex : 0;
+    },
+  },
   methods: {
     selectTimezone(item: Timezone) {
       this.$store.commit("setSelectedTimezone", item);
+      this.$store.commit("setHandLoading", true);
+      setTimeout(() => this.$store.commit("setHandLoading", false), 1000);
     },
   },
 });

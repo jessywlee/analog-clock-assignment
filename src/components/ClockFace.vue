@@ -5,9 +5,12 @@
       <span v-if="hovered" class="clock-tooltip" :style="tooltipPosition">
         {{ $store.state.now.toLocaleString() }}
       </span>
-      <ClockHand handType="HOUR" />
-      <ClockHand handType="MINUTE" />
-      <ClockHand handType="SECOND" />
+      <span v-if="$store.state.handLoading" class="loading">✈️...</span>
+      <div v-show="!$store.state.handLoading">
+        <ClockHand handType="HOUR" />
+        <ClockHand handType="MINUTE" />
+        <ClockHand handType="SECOND" />
+      </div>
     </div>
   </div>
 </template>
@@ -26,7 +29,6 @@ export default defineComponent({
       pointerX: 0,
       pointerY: 0,
       getTimeInterval: null as number | null,
-      handLoaded: false,
     };
   },
   computed: {
@@ -49,7 +51,7 @@ export default defineComponent({
       this.hovered = false;
     },
     getTime() {
-      this.$store.commit("getNewDate");
+      this.$store.commit("getNowDate");
     },
   },
   mounted() {
@@ -99,5 +101,15 @@ export default defineComponent({
   padding: 8px;
   background-color: rgba(76, 214, 175, 0.5);
   font-weight: 600;
+}
+
+.loading {
+  position: absolute;
+  top: 45%;
+  left: 42%;
+  font-size: 30px;
+  padding: 8px;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
 }
 </style>

@@ -7,6 +7,7 @@ declare module "@vue/runtime-core" {
     now: Date;
     timezoneOptions: Timezone[];
     selectedTimezone: Timezone;
+    handLoading: boolean;
   }
 
   interface ComponentCustomProperties {

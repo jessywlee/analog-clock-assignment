@@ -1,18 +1,15 @@
 <template>
-  <ClockTimezoneSelection />
-  <AnalogClock />
+  <ClockApp />
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import AnalogClock from "./components/AnalogClock.vue";
-import ClockTimezoneSelection from "./components/ClockTimezoneSelection.vue";
+import ClockApp from "./components/ClockApp.vue";
 
 export default defineComponent({
   name: "App",
   components: {
-    ClockTimezoneSelection,
-    AnalogClock,
+    ClockApp,
   },
 });
 </script>
