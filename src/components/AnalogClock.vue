@@ -1,7 +1,7 @@
 <template>
   <div class="clock-container">
     <div class="clock" @mousemove="hoverOnClock" @mouseleave="leaveFromClock">
-      <img class="clock-img" src="@/assets/seoul.jpg" />
+      <img class="clock-img" :src="$store.state.selectedTimezone.image" />
       <span v-if="hovered" class="clock-tooltip" :style="tooltipPosition">
         {{ $store.state.now.toLocaleString() }}
       </span>
@@ -26,6 +26,7 @@ export default defineComponent({
       pointerX: 0,
       pointerY: 0,
       getTimeInterval: null as number | null,
+      handLoaded: false,
     };
   },
   computed: {

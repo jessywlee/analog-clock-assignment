@@ -1,8 +1,41 @@
 import { createStore } from "vuex";
+export interface Timezone {
+  city: string;
+  value: string;
+  timezone: string;
+  image: string;
+}
 
 export default createStore({
   state: {
+    timezoneOptions: [
+      {
+        city: "Seoul",
+        value: "seoul",
+        timezone: "Asia/Seoul",
+        image: require("@/assets/seoul.jpg"),
+      },
+      {
+        city: "Los Angeles",
+        value: "la",
+        timezone: "America/Los_Angeles",
+        image: require("@/assets/losangeles.jpg"),
+      },
+      {
+        city: "London",
+        value: "london",
+        timezone: "Europe/London",
+        image: require("@/assets/london.jpg"),
+      },
+    ] as Timezone[],
+    selectedTimezone: {
+      city: "Seoul",
+      value: "seoul",
+      timezone: "Asia/Seoul",
+      image: require("@/assets/seoul.jpg"),
+    } as Timezone,
     now: new Date(),
+    handLoaded: false,
   },
   getters: {
     rotationDegreesHours(state) {
@@ -20,7 +53,14 @@ export default createStore({
   },
   mutations: {
     getNewDate(state) {
-      state.now = new Date();
+      state.now = new Date(
+        new Date().toLocaleString("en-US", {
+          timeZone: state.selectedTimezone.timezone,
+        })
+      );
+    },
+    setSelectedTimezone(state, selected: Timezone) {
+      state.selectedTimezone = selected;
     },
   },
   actions: {},
