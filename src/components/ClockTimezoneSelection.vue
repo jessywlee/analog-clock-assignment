@@ -17,7 +17,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { Timezone } from "../store/index";
+import { TimezoneInfo } from "../store/index";
 
 export default defineComponent({
   name: "ClockTimezoneSelection",
@@ -34,7 +34,7 @@ export default defineComponent({
     },
   },
   methods: {
-    selectTimezone(item: Timezone) {
+    selectTimezone(item: TimezoneInfo) {
       this.$store.commit("setSelectedTimezone", item);
       this.$store.commit("setHandLoading", true);
       setTimeout(() => this.$store.commit("setHandLoading", false), 1000);

@@ -1,5 +1,16 @@
 import { createStore } from "vuex";
-export interface Timezone {
+import TIME from "@/statics/constants";
+
+const {
+  CLOCK_DEGREES,
+  HOURS_IN_ONE,
+  MINS_IN_ONE,
+  SECONDS_IN_ONE,
+  DEGREES_PER_HOUR,
+  DEGREES_PER_MIN,
+  ROTATION_ADJUSTMENT,
+} = TIME;
+export interface TimezoneInfo {
   city: string;
   value: string;
   timezone: string;
@@ -27,28 +38,44 @@ export default createStore({
         timezone: "Europe/London",
         image: require("@/assets/london.jpg"),
       },
-    ] as Timezone[],
+    ] as TimezoneInfo[],
     selectedTimezone: {
       city: "Seoul",
       value: "seoul",
       timezone: "Asia/Seoul",
       image: require("@/assets/seoul.jpg"),
-    } as Timezone,
+    } as TimezoneInfo,
     now: new Date(),
     handLoading: false,
   },
   getters: {
-    rotationDegreesHours(state) {
-      const hours = state.now.getHours();
-      return (hours / 12) * 360 + (state.now.getMinutes() / 60) * 30 + 90;
+    hours(state) {
+      return state.now.getHours();
     },
-    rotationDegreesMinutes(state) {
-      const mins = state.now.getMinutes();
-      return (mins / 60) * 360 + (state.now.getSeconds() / 60) * 6 + 90;
+    minutes(state) {
+      return state.now.getMinutes();
     },
-    rotationDegreesSeconds(state) {
-      const seconds = state.now.getSeconds();
-      return (seconds / 60) * 360 + 90;
+    seconds(state) {
+      return state.now.getSeconds();
+    },
+    rotationDegreesHours(state, getters) {
+      return (
+        (getters.hours / HOURS_IN_ONE) * CLOCK_DEGREES +
+        (getters.minutes / MINS_IN_ONE) * DEGREES_PER_HOUR +
+        ROTATION_ADJUSTMENT
+      );
+    },
+    rotationDegreesMinutes(state, getters) {
+      return (
+        (getters.minutes / MINS_IN_ONE) * CLOCK_DEGREES +
+        (getters.seconds / SECONDS_IN_ONE) * DEGREES_PER_MIN +
+        ROTATION_ADJUSTMENT
+      );
+    },
+    rotationDegreesSeconds(state, getters) {
+      return (
+        (getters.seconds / SECONDS_IN_ONE) * CLOCK_DEGREES + ROTATION_ADJUSTMENT
+      );
     },
   },
   mutations: {
@@ -59,7 +86,7 @@ export default createStore({
         })
       );
     },
-    setSelectedTimezone(state, selected: Timezone) {
+    setSelectedTimezone(state, selected: TimezoneInfo) {
       state.selectedTimezone = selected;
     },
     setHandLoading(state, value: boolean) {
