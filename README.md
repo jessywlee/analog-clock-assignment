@@ -1,7 +1,7 @@
 # Analog Clock Project ⏱
 Analog Clock App developed with VueJS, Vuex, and TS. <br>
 
-**Check it out on my [github page](https://jessywlee.github.io/analog-clock-assignment/)!**
+**Check it out on my [github page](https://jessywlee.github.io/analog-clock-project/)!**
 
 ## Main Features
 - The current time on the anlalog clock face with hour, minute, and second hands
