@@ -62,7 +62,7 @@ export default createStore({
     setSelectedTimezone(state, selected: Timezone) {
       state.selectedTimezone = selected;
     },
-    setHandLoading(state, value) {
+    setHandLoading(state, value: boolean) {
       state.handLoading = value;
     },
   },

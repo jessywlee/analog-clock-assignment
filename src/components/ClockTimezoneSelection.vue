@@ -4,7 +4,7 @@
       :key="item.value"
       v-for="(item, index) in $store.state.timezoneOptions"
       :class="`timezone-${item.value}`"
-      @click="selectTimezone(item, index)"
+      @click="selectTimezone(item)"
       :style="{
         'background-color':
           activeButton === index ? 'rgba(76, 214, 175, 0.5)' : '',

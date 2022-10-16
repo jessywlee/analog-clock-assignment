@@ -19,6 +19,10 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import ClockHand from "./ClockHand.vue";
+interface TooltipPosition {
+  top: string;
+  left: string;
+}
 
 export default defineComponent({
   name: "AnalogClock",
@@ -33,7 +37,7 @@ export default defineComponent({
     };
   },
   computed: {
-    tooltipPosition(): object {
+    tooltipPosition(): TooltipPosition {
       const yPosition = this.pointerY - 60;
       const xPosition = this.pointerX + 20;
       return {

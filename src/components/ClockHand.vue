@@ -37,7 +37,12 @@ export default defineComponent({
       }
     },
     applyRotation() {
-      return `transform: rotate(${this.getDegreesToRotate}deg)`;
+      if (this.getDegreesToRotate != null) {
+        return `transform: rotate(${this.getDegreesToRotate}deg)`;
+      } else {
+        console.log("Cannot get time!");
+        return "";
+      }
     },
   },
   methods: {},
