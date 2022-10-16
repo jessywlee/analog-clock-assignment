@@ -1,24 +1,14 @@
-# analog-clock-assignment
+# Analog Clock Project ⏱
+Analog Clock App developed with VueJS, Vuex, and TS. <br>
+
+Check it out on my [github page](https://jessywlee.github.io/analog-clock-assignment/) !
 
 ## Project setup
-```
-yarn install
-```
+`yarn install`
 
 ### Compiles and hot-reloads for development
-```
-yarn serve
-```
+`yarn serve`
 
 ### Compiles and minifies for production
-```
-yarn build
-```
+`yarn build`
 
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
