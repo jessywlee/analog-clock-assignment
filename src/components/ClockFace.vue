@@ -2,12 +2,12 @@
   <div class="clock-container">
     <div class="clock" @mousemove="hoverOnClock" @mouseleave="leaveFromClock">
       <div class="clock-center"></div>
-      <img class="clock-img" :src="$store.state.selectedTimezone.image" />
+      <img class="clock-img" :src="selectedTimezone.image" />
       <span v-if="hovered" class="clock-tooltip" :style="tooltipPosition">
-        {{ $store.state.now.toLocaleString() }}
+        {{ currentTimeInTexts }}
       </span>
-      <span v-if="$store.state.handLoading" class="loading">✈️...</span>
-      <div v-show="!$store.state.handLoading">
+      <span v-if="isHandLoading" class="loading">✈️...</span>
+      <div v-show="!isHandLoading">
         <ClockHand handType="HOUR" />
         <ClockHand handType="MINUTE" />
         <ClockHand handType="SECOND" />
@@ -19,6 +19,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import ClockHand from "./ClockHand.vue";
+import { TimezoneInfoState } from "../store/state";
 interface TooltipPosition {
   top: string;
   left: string;
@@ -37,6 +38,12 @@ export default defineComponent({
     };
   },
   computed: {
+    currentTimeInTexts(): string {
+      return this.$store.state.now.toLocaleString();
+    },
+    selectedTimezone(): TimezoneInfoState {
+      return this.$store.state.selectedTimezone;
+    },
     tooltipPosition(): TooltipPosition {
       const yPosition = this.pointerY - 60;
       const xPosition = this.pointerX + 20;
@@ -44,6 +51,9 @@ export default defineComponent({
         top: `${yPosition}px`,
         left: `${xPosition}px`,
       };
+    },
+    isHandLoading(): boolean {
+      return this.$store.state.handLoading;
     },
   },
   methods: {

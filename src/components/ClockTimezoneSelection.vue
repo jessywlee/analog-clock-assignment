@@ -2,7 +2,7 @@
   <div class="timezone-btn-container">
     <button
       :key="item.value"
-      v-for="(item, index) in $store.state.timezoneOptions"
+      v-for="(item, index) in timezoneOptions"
       :class="`timezone-${item.value}`"
       @click="selectTimezone(item)"
       :style="{
@@ -26,6 +26,9 @@ export default defineComponent({
     return {};
   },
   computed: {
+    timezoneOptions(): TimezoneInfoState[] {
+      return this.$store.state.timezoneOptions;
+    },
     activeButton() {
       const timezoneIndex = this.$store.state.timezoneOptions.indexOf(
         this.$store.state.selectedTimezone
