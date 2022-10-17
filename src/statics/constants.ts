@@ -1,4 +1,4 @@
-const TIME = {
+export default {
   CLOCK_DEGREES: 360,
   HOURS_IN_ONE: 12,
   MINS_IN_ONE: 60,
@@ -7,5 +7,3 @@ const TIME = {
   DEGREES_PER_MIN: 6,
   ROTATION_ADJUSTMENT: 90,
 };
-
-export default TIME;
