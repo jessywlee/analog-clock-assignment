@@ -1,6 +1,10 @@
 <template>
   <div class="clock-container">
-    <div class="clock" @mousemove="hoverOnClock" @mouseleave="leaveFromClock">
+    <div
+      class="clock"
+      @mousemove="movePointerOnClock"
+      @mouseleave="leaveFromClock"
+    >
       <div class="clock-center"></div>
       <img class="clock-img" :src="selectedTimezone.image" />
       <span v-if="hovered" class="clock-tooltip" :style="tooltipPosition">
@@ -31,6 +35,7 @@ export default defineComponent({
   props: {},
   data() {
     return {
+      pointerPositionTimer: undefined as number | undefined,
       hovered: false,
       pointerX: 0,
       pointerY: 0,
@@ -57,13 +62,19 @@ export default defineComponent({
     },
   },
   methods: {
-    hoverOnClock(e: MouseEvent) {
+    movePointerOnClock(e: MouseEvent) {
       this.hovered = true;
-      this.pointerX = e.clientX;
-      this.pointerY = e.clientY;
+      if (!this.pointerPositionTimer) {
+        this.pointerPositionTimer = setTimeout(() => {
+          this.pointerPositionTimer = undefined;
+          this.pointerX = e.clientX;
+          this.pointerY = e.clientY;
+        }, 200);
+      }
     },
     leaveFromClock() {
       this.hovered = false;
+      clearTimeout(this.pointerPositionTimer);
     },
     getTime() {
       this.$store.commit("getNowDate");
